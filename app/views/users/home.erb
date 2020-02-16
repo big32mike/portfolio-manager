@@ -1,0 +1,13 @@
+<h1>Welcome <%= @user.username %></h1>
+
+<% if @user.portfolios == [] %>
+<p>You don't have any portfolios yet. Would you like to <a href="/portfolios/new">create one?</a></p>
+<% else %>
+<h3>Your Portfolios</h3>
+  <ul>
+  <% @user.portfolios.each do |port| %>
+    <li><a href="/portolios/<%= port.id %>"><%= port.name %></li>
+    <% end %>
+  </ul>
+<% end %>
+
