@@ -15,6 +15,13 @@
   </head>
   <body>
     <div class="wrapper">
+      <% if logged_in? %>
+      <div class="nav">
+        <a href="/users/<%= current_user.id %>">Your Portfolios</a>
+        <a href="/portfolios/new">New Portfolio</a>
+        <a href="/logout">Logout</a>
+      </div>
+      <% end %>
 
         <%= yield %>
 

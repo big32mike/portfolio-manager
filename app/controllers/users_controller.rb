@@ -11,14 +11,14 @@ class UsersController < ApplicationController
     end
 
     get '/users/:id' do
-        if logged_in? && params[:id] == current_user.id
+        if logged_in? && params[:id].to_i == current_user.id
           @user = User.find(session[:user_id])
           erb :'users/show'
         end
     end
 
     post '/login' do
-        if !logged_in
+        if !logged_in?
           user = User.find_by(username: params[:username])
           if user && user.authenticate(params[:password])
               session[:user_id] = user.id
