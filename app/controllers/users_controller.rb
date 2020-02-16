@@ -28,4 +28,22 @@ class UsersController < ApplicationController
             redirect to '/logout'
         end
     end
+
+    get '/signup' do
+        redirect to "/users/#{current_user.id}" if logged_in?
+        erb :'users/new'
+    end
+
+    post '/signup' do
+        redirect to '/logout' if logged_in?
+        redirect to'/signup' if params[:password] != params[:password2] # flash[:error] = "Passwords must match"
+        user = User.find_by(username: params[:username])
+        if user
+            redirect to '/login' #flash[:error] = "User #{user.username} already exists, please login"
+        else
+            user = User.create(username: params[:username], password: params[:password])
+            session[:user_id] = user.id
+            redirect to "/users/#{current_user.id}"
+        end
+    end
 end
