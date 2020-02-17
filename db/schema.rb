@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200215202831) do
+ActiveRecord::Schema.define(version: 20200217195009) do
 
   create_table "portfolios", force: :cascade do |t|
     t.string  "name"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20200215202831) do
 
   create_table "stocks", force: :cascade do |t|
     t.string  "symbol"
-    t.integer "price"
     t.integer "portfolio_id"
+    t.string  "asset_class"
+    t.string  "name"
   end
 
   create_table "users", force: :cascade do |t|
