@@ -6,7 +6,7 @@
 <h3>Your Portfolios</h3>
   <ul>
   <% @user.portfolios.each do |port| %>
-    <li><a href="/portolios/<%= port.id %>"><%= port.name %></li>
+    <li><a href="/portfolios/<%= port.id %>"><%= port.name %></li>
     <% end %>
   </ul>
 <% end %>

@@ -1,0 +1,18 @@
+<h2><%= @portfolio.name %> Holdings</h2>
+
+<ul>
+  <% @stocks.each do |s| %>
+    <li><%= s.symbol %></li>
+  <% end %>
+</ul>
+
+<br>
+
+<% if @portfolios != [] %>
+  <h3>Other Portfolios belonging to <%= current_user.username %></h3>
+  <ul>
+  <% @portfolios.each do |p| %>
+    <li><a href="/portfolios/<%= p.id %>"><%= p.name %></a></li>
+  </ul>
+  <% end %>
+<% end %>

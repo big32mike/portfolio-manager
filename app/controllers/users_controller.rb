@@ -37,7 +37,9 @@ class UsersController < ApplicationController
     post '/signup' do
         redirect to '/logout' if logged_in?
         redirect to'/signup' if params[:password] != params[:password2] # flash[:error] = "Passwords must match"
+        
         user = User.find_by(username: params[:username])
+
         if user
             redirect to '/login' #flash[:error] = "User #{user.username} already exists, please login"
         else
