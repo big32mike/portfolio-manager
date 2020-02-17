@@ -1,10 +1,22 @@
 <h2><%= @portfolio.name %> Holdings</h2>
 
-<ul>
+
+<% if @stocks != [] %>
+<table>
+  <tr>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Asset Class</th>
+  </tr>
   <% @stocks.each do |s| %>
-    <li><%= s.symbol %></li>
+  <tr>
+      <td><%= s.symbol %></td>
+      <td><%= s.name %></td>
+      <td><%= s.asset_class %></td>
+  </tr>
   <% end %>
-</ul>
+</table>
+<% end %>
 
 <br>
 

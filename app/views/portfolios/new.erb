@@ -18,7 +18,7 @@
   <br>
 
     <% @stocks.each do |s| %>
-      <input type="checkbox" name="stock[ids][]" id="<%= s.id %>" value="<%= s.id %>"><%= s.symbol %>
+      <input type="checkbox" name="stock_ids[]" id="<%= s.id %>" value="<%= s.id %>"><%= s.symbol %>
       <br>
     <% end %>
     <br>
@@ -31,6 +31,12 @@
   <p>
     <label for="stock_symbol">Symbol:</label>
     <input type="text" id="stock_symbol" name="stock[symbol]">
+    <br>
+    <label for="stock_name">Name:</label>
+    <input type="text" id="stock_name" name="stock[name]">
+    <br>
+    <label for="stock_asset_class">Asset Class:</label>
+    <input type="text" id="stock_asset_class" name="stock[asset_class]">
   </p>
 
   <p>

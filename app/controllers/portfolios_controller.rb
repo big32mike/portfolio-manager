@@ -29,18 +29,20 @@ class PortfoliosController < ApplicationController
             stocks = []
             portfolio = Portfolio.create(name: params[:portfolio][:name])
 
-            if params[:stock][:ids]
-                params[:stock][:ids].each do |stock_id|
+            if params[:stock_ids]
+                params[:stock_ids].each do |stock_id|
                     stocks << Stock.find(stock_id)
                 end
             end
 
             if params[:stock][:symbol] != ""
-                stocks << Stock.create(symbol: params[:stock][:symbol])
+                s_params = params[:stock]
+                #stocks << Stock.create(symbol: params[:stock][:symbol])
+                stocks << Stock.create(s_params)
             end
 
             portfolio.stocks = stocks
-            current_user.portfolios << portfolios
+            current_user.portfolios << portfolio
             redirect to "/portfolios/#{portfolio.id}"
         else
             redirect to '/login' # flash[:error] = "You must be logged in to create a new portfolio"
