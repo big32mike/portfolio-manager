@@ -12,7 +12,8 @@ class PortfoliosController < ApplicationController
 
     get '/portfolios/:id' do
         @portfolio = Portfolio.find(params[:id])
-        if current_user.id == @portfolio.user_id
+        # if current_user.id == @portfolio.user_id
+        if authorized?(@portfolio)
             @portfolios = current_user.portfolios.select {|p| p.id != @portfolio.id}
             @stocks = @portfolio.stocks
             erb :'portfolios/show'
@@ -46,6 +47,43 @@ class PortfoliosController < ApplicationController
             redirect to "/portfolios/#{portfolio.id}"
         else
             redirect to '/login' # flash[:error] = "You must be logged in to create a new portfolio"
+        end
+    end
+
+    get '/portfolios/:id/edit' do
+        @portfolio = Portfolio.find(params[:id])
+        if authorized?(@portfolio)
+            @portfolios = current_user.portfolios
+            @stocks = Stock.all
+            erb :'portfolios/edit'
+        else
+            # flash[:error] = "You're not authorized to edit this portfolio"
+            redirect to '/login'
+        end
+    end
+
+    patch '/portfolios/:id' do
+        portfolio = Portfolio.find(params[:id])
+        if authorized?(portfolio)
+            stocks = []
+            portfolio.name = params[:portfolio][:name]
+
+            #binding.pry
+            if params[:stock_ids]
+                params[:stock_ids].each do |stock_id|
+                    stocks << Stock.find(stock_id)
+                end
+            else
+                portfolio.stocks.clear
+            end
+
+            if params[:stock][:symbol] != "" && params[:stock][:name] != "" && params[:stock][:asset_class] != ""
+                stocks << Stock.create(params[:stock])
+            end
+            
+            portfolio.stocks << stocks
+            portfolio.save
+            redirect to "/portfolios/#{portfolio.id}"
         end
     end
 end

@@ -22,6 +22,10 @@ class ApplicationController < Sinatra::Base
     def current_user
       User.find(session[:user_id])
     end
+
+    def authorized?(portfolio)
+      current_user.id == portfolio.user_id
+    end
   end
 
 end

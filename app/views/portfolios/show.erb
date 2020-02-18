@@ -16,8 +16,14 @@
   </tr>
   <% end %>
 </table>
+<% else %>
+  <h3><%= @portfolio.name %> doesn't have any stocks yet.</h3>
 <% end %>
 
+<br>
+<a href="/portfolios/<%= @portfolio.id %>/edit">Edit Portfolio</a>
+<br>
+<br>
 <br>
 
 <% if @portfolios != [] %>
