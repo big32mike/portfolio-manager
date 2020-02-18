@@ -36,4 +36,14 @@ class StocksController < ApplicationController
         end
         redirect to '/stocks'
     end
+
+    delete '/stocks/:id/delete' do
+        if logged_in?
+            stock = Stock.find(params[:id])
+            stock.delete
+            redirect to '/stocks'
+        else
+            redirect to '/login'
+        end
+    end
 end
