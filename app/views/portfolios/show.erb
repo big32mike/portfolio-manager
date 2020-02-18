@@ -20,6 +20,16 @@
   <h3><%= @portfolio.name %> doesn't have any stocks yet.</h3>
 <% end %>
 
+<h3>Add stocks to <%= @portfolio.name %></h3>
+<form class="" action="/stocks" method="post">
+  <label for="stock_name">Name:</label>
+  <input type="text" id="stock_name" name="stock[name]">
+  <label for="stock_symbol">Symbol:</label>
+  <input type="text" id="stock_symbol" name="stock[symbol]">
+  <label for="stock_asset_class">Asset Class:</label>
+  <input type="text" id="stock_asset_class" name="stock[asset_class]">
+  <input type="submit" value="Create Stock">
+</form>
 <br>
 <a href="/portfolios/<%= @portfolio.id %>/edit">Edit Portfolio</a>
 <br>

@@ -68,7 +68,7 @@ class PortfoliosController < ApplicationController
             stocks = []
             portfolio.name = params[:portfolio][:name]
 
-            #binding.pry
+            #fbinding.pry
             if params[:stock_ids]
                 params[:stock_ids].each do |stock_id|
                     stocks << Stock.find(stock_id)
