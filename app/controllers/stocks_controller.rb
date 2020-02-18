@@ -15,6 +15,7 @@ class StocksController < ApplicationController
         if authorized?(portfolio)
             portfolio.stocks << stock
             portfolio.save
+            flash[:message] = "Portfolio #{portfolio.name} created"
             redirect to "/portfolios/#{portfolio.id}"
         end
 
@@ -33,6 +34,7 @@ class StocksController < ApplicationController
             stock.name = params[:name]
             stock.asset_class = params[:asset_class]
             stock.save
+            flash[:message] = "#{stock.symbol} updated"
         end
         redirect to '/stocks'
     end
@@ -41,8 +43,10 @@ class StocksController < ApplicationController
         if logged_in?
             stock = Stock.find(params[:id])
             stock.delete
+            flash[:message] = "#{stock.symbol} deleted"
             redirect to '/stocks'
         else
+            flash[:error] = "You must be logged in to delete a stock"
             redirect to '/login'
         end
     end
