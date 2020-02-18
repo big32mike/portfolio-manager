@@ -6,8 +6,16 @@ class StocksController < ApplicationController
     end
 
     post '/stocks' do
+        portfolio = Portfolio.find(params[:portfolio][:id])
+
         if params[:stock][:symbol] != "" && params[:stock][:name] != "" && params[:stock][:asset_class] != ""
-            stocks << Stock.create(params[:stock])
+            stock = Stock.create(params[:stock])
+        end
+
+        if authorized?(portfolio)
+            portfolio.stocks << stock
+            portfolio.save
+            redirect to "/portfolios/#{portfolio.id}"
         end
 
         redirect to '/stocks'

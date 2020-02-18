@@ -86,4 +86,14 @@ class PortfoliosController < ApplicationController
             redirect to "/portfolios/#{portfolio.id}"
         end
     end
+
+    delete '/portfolios/:id/delete' do
+        portfolio = Portfolio.find(params[:id])
+        if authorized?(portfolio)
+            portfolio.delete
+        else
+            # flash[:error] = "You're not authorized to delete this Portfolio"
+        end
+        redirect to '/login'
+    end
 end

@@ -24,15 +24,23 @@
 <form class="" action="/stocks" method="post">
   <label for="stock_name">Name:</label>
   <input type="text" id="stock_name" name="stock[name]">
+  <br>
   <label for="stock_symbol">Symbol:</label>
   <input type="text" id="stock_symbol" name="stock[symbol]">
+  <br>
   <label for="stock_asset_class">Asset Class:</label>
   <input type="text" id="stock_asset_class" name="stock[asset_class]">
+  <br>
+  <input type="hidden" name="portfolio[id]" value="<%= @portfolio.id %>">
   <input type="submit" value="Create Stock">
 </form>
 <br>
 <a href="/portfolios/<%= @portfolio.id %>/edit">Edit Portfolio</a>
 <br>
+<form class="" action="/portfolios/<%= @portfolio.id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete <%= @portfolio.name %>">
+</form>
 <br>
 <br>
 
