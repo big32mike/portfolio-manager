@@ -6,25 +6,34 @@ class StocksController < ApplicationController
     end
 
     post '/stocks' do
-        portfolio = Portfolio.find(params[:portfolio][:id])
-
-        if params[:stock][:symbol] != "" && params[:stock][:name] != "" && params[:stock][:asset_class] != ""
+        if logged_in?
+            portfolio = Portfolio.find(params[:portfolio][:id])
             stock = Stock.create(params[:stock])
-        end
+            if !Stock.all.include?(stock)
+                flash[:error] = "Invalid input"
+                redirect to "/portfolios/#{portfolio.id}"
+            end
 
-        if authorized?(portfolio)
-            portfolio.stocks << stock
-            portfolio.save
-            flash[:message] = "Portfolio #{portfolio.name} created"
-            redirect to "/portfolios/#{portfolio.id}"
+            if authorized?(portfolio)
+                portfolio.stocks << stock
+                portfolio.save
+                flash[:message] = "Stock #{stock.symbol} created"
+                redirect to "/portfolios/#{portfolio.id}"
+            end
+        else
+            flash[:error] = "You must be logged in to create a stock"
+            redirect to '/login'
         end
-
-        redirect to '/stocks'
     end
 
     get '/stocks/:id/edit' do
-        @stock = Stock.find(params[:id])
-        erb :'stocks/edit'
+        if logged_in?
+            @stock = Stock.find(params[:id])
+            erb :'stocks/edit'
+        else
+            flash[:error] = "You must be logged in to edit a stock"
+            redirect to '/login'
+        end
     end
 
     patch '/stocks/:id' do

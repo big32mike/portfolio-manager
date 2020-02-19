@@ -12,14 +12,16 @@ class PortfoliosController < ApplicationController
     end
 
     get '/portfolios/:id' do
-        @portfolio = Portfolio.find(params[:id])
-        if authorized?(@portfolio)
-            @portfolios = current_user.portfolios.select {|p| p.id != @portfolio.id}
-            @stocks = @portfolio.stocks
-            erb :'portfolios/show'
-        elsif logged_in?
-            flash[:error] = "You are not authorized to view that portfolio"
-            redirect to "/users/#{current_user.id}"
+        if logged_in?
+            @portfolio = Portfolio.find(params[:id])
+            if authorized?(@portfolio)
+                @portfolios = current_user.portfolios.select {|p| p.id != @portfolio.id}
+                @stocks = @portfolio.stocks
+                erb :'portfolios/show'
+            else
+                flash[:error] = "You are not authorized to view that portfolio"
+                redirect to "/users/#{current_user.id}"
+            end
         else
             flash[:error] = "You must be logged in to view a portfolio"
             redirect to '/login'
