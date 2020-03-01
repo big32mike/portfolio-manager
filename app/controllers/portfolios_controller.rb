@@ -29,17 +29,16 @@ class PortfoliosController < ApplicationController
     end
 
     post '/portfolios' do
+
+        if params[:portfolio][:name] == ""
+            flash[:error] = "Portfolio requires a name"
+            redirect to '/portfolios/new'
+        end
+
         if logged_in?
             portfolio = Portfolio.create(name: params[:portfolio][:name])
             current_user.portfolios << portfolio if portfolio
-
-            if params[:stock][:symbol] != "" && params[:stock][:price] != "" && params[:stock][:quantity] != ""
-                s_params = params[:stock]
-                portfolio.stocks << Stock.create(s_params)
-            end
-
             redirect to "/portfolios/#{portfolio.id}"
-
         else
             flash[:error] = "You must be logged in to create a new portfolio"
             redirect to '/login'

@@ -22,6 +22,11 @@ class StocksController < ApplicationController
     end
 
     post '/stocks' do
+        if params[:stock].values.any? {|s| s == ""}
+            flash[:error] = "All fields required to create new stock"
+            redirect to "/portfolios/#{params[:portfolio][:id]}"
+        end
+
         if logged_in?
             portfolio = Portfolio.find(params[:portfolio][:id])
 
@@ -61,7 +66,7 @@ class StocksController < ApplicationController
     patch '/stocks/:id' do
         stock = Stock.find(params[:id])
         if logged_in?
-            portfolio = stock_portfolio(@stock))
+            portfolio = stock_portfolio(stock)
             if authorized?(portfolio)
 
                 if params.values.all? { |value| value != ""}

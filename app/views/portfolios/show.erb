@@ -51,10 +51,9 @@
   <input type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete <%= @portfolio.name %>">
 </form>
-<br>
-<br>
 
 <% if @portfolios != [] %>
+<br>
   <h3>Other Portfolios belonging to <%= current_user.username %></h3>
   <ul>
   <% @portfolios.each do |p| %>
