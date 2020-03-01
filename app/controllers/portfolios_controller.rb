@@ -57,7 +57,6 @@ class PortfoliosController < ApplicationController
         @portfolio = Portfolio.find(params[:id])
         if authorized?(@portfolio)
             @portfolios = current_user.portfolios
-            @stocks = Stock.all
             erb :'portfolios/edit'
         else
             flash[:error] = "You're not authorized to edit #{portfolio.name}"

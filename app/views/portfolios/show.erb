@@ -5,13 +5,17 @@
 <table>
   <tr>
       <th>Symbol</th>
+      <th>Price</th>
       <th>Name</th>
+      <th>Qty</th>
       <th>Asset Class</th>
   </tr>
   <% @stocks.each do |s| %>
   <tr>
       <td><%= s.symbol %></td>
+      <td><%= s.price %></td>
       <td><%= s.name %></td>
+      <td><%= s.quantity %></td>
       <td><%= s.asset_class %></td>
   </tr>
   <% end %>
@@ -25,8 +29,14 @@
   <label for="stock_name">Name:</label>
   <input type="text" id="stock_name" name="stock[name]">
   <br>
+  <label for="stock_price">Price:</label>
+  <input type="text" id="stock_price" name="stock[price]">
+  <br>
   <label for="stock_symbol">Symbol:</label>
   <input type="text" id="stock_symbol" name="stock[symbol]">
+  <br>
+  <label for="stock_quantity">Qty:</label>
+  <input type="text" id="stock_quantity" name="stock[quantity]">
   <br>
   <label for="stock_asset_class">Asset Class:</label>
   <input type="text" id="stock_asset_class" name="stock[asset_class]">

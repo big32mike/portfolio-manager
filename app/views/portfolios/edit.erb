@@ -10,19 +10,24 @@
 </ul>
 <br>
 <% end %>
-
+  
+  <h4>Holdings:</h4>
 <form action="/portfolios/<%= @portfolio.id %>" method="post">
 <input type="hidden" name="_method" value="patch">
-  <% if @stocks != [] %>
-  <h4>Choose from existing stocks</h4>
-    <% @stocks.each do |s| %>
+  <!-- <% if portfolio.stocks != [] %>
+    <% portfolio.stocks.each do |s| %>
+      <ul>
+        <li>
+          <form action="/portfolios/<%= @portfolio.id %>/stocks/<%= s.id %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            
       <input type="checkbox" name="stock_ids[]" id="<%= s.id %>" value="<%= s.id %>" <%= 'checked' if @portfolio.stocks.all.include?(s) %> ><%= s.symbol %>
       <br>
     <% end %>
     <br>...or<br><br>
   <% else %>
     <h4>Portfolio empty.</h4>
-  <% end %>
+  <% end %> -->
     <h4>Create a new stock</h4>
 
   <p>
