@@ -79,7 +79,7 @@
 
 <br>
 
-<h4>Delete Portfolio</h4>
+<h4 style="color:red;">Delete Portfolio</h4>
 <form action="/portfolios/<%= @portfolio.id %>/delete" method="post">
   <input type="hidden" name="_method" value="delete">
   <input type="submit" value="DELETE <%= @portfolio.name %>">
