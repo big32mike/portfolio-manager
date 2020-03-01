@@ -76,7 +76,11 @@ class PortfoliosController < ApplicationController
     delete '/portfolios/:id/delete' do
         portfolio = Portfolio.find(params[:id])
         if authorized?(portfolio)
+            portfolio.stocks.each do |s|
+                s.delete
+            end
             portfolio.delete
+            redirect to "/users/#{current_user.id}"
         end
         redirect to '/login'
     end
