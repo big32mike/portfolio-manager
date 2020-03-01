@@ -47,16 +47,4 @@ class StocksController < ApplicationController
         end
         redirect to '/stocks'
     end
-
-    delete '/stocks/:id/delete' do
-        if logged_in?
-            stock = Stock.find(params[:id])
-            stock.delete
-            flash[:message] = "#{stock.symbol} deleted"
-            redirect to '/stocks'
-        else
-            flash[:error] = "You must be logged in to delete a stock"
-            redirect to '/login'
-        end
-    end
 end

@@ -77,9 +77,29 @@ class PortfoliosController < ApplicationController
         portfolio = Portfolio.find(params[:id])
         if authorized?(portfolio)
             portfolio.delete
-        else
-            flash[:error] = "You're not authorized to delete #{portfolio.name}"
         end
         redirect to '/login'
+    end
+
+    delete '/portfolios/:id/stocks/:s_id/delete' do
+
+        if logged_in?
+            portfolio = Portfolio.find(params[:id])
+
+            if authorized?(portfolio)
+                stock = Stock.find(params[:s_id])
+                stock.delete
+                flash[:message] = "#{stock.symbol} deleted (#{stock.name})"
+                redirect to "/portfolios/#{portfolio.id}"
+            else
+                flash[:error] = "You aren't authorized to delete that stock"
+                redirect to "/users/#{current_user.id}"
+            end
+
+        else
+            flash[:error] = "You must be logged in to delete a stock"
+            redirect to '/login'
+        end
+
     end
 end

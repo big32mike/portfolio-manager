@@ -31,7 +31,7 @@
         <td><%= s.quantity %></td>
         <td><%= s.asset_class %></td>
         <td>
-          <form action="/portfolios/<%= @portfolio.id %>/stocks/<%= s.id %>" method="post">
+          <form action="/portfolios/<%= @portfolio.id %>/stocks/<%= s.id %>/delete" method="post">
             <input type="hidden" name="_method" value="delete">
             <input type="submit" value="Delete <%= s.symbol %>">
           </form>
