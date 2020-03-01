@@ -3,7 +3,6 @@ class PortfoliosController < ApplicationController
     get '/portfolios/new' do
         if logged_in?
             @portfolios = current_user.portfolios
-            @stocks = Stock.all
             erb :'portfolios/new'
         else
             flash[:error] = "You must be logged in to create a new portfolio"
@@ -14,6 +13,7 @@ class PortfoliosController < ApplicationController
     get '/portfolios/:id' do
         if logged_in?
             @portfolio = Portfolio.find(params[:id])
+
             if authorized?(@portfolio)
                 @portfolios = current_user.portfolios.select {|p| p.id != @portfolio.id}
                 @stocks = @portfolio.stocks
@@ -30,27 +30,21 @@ class PortfoliosController < ApplicationController
 
     post '/portfolios' do
         if logged_in?
-            stocks = []
             portfolio = Portfolio.create(name: params[:portfolio][:name])
+            current_user.portfolios << portfolio if portfolio
 
-            if params[:stock_ids]
-                params[:stock_ids].each do |stock_id|
-                    stocks << Stock.find(stock_id)
-                end
-            end
-
-            if params[:stock][:symbol] != ""
+            if params[:stock][:symbol] != "" && params[:stock][:price] != "" && params[:stock][:quantity] != ""
                 s_params = params[:stock]
-                stocks << Stock.create(s_params)
+                portfolio.stocks << Stock.create(s_params)
             end
 
-            portfolio.stocks = stocks
-            current_user.portfolios << portfolio
             redirect to "/portfolios/#{portfolio.id}"
+
         else
             flash[:error] = "You must be logged in to create a new portfolio"
             redirect to '/login'
         end
+
     end
 
     get '/portfolios/:id/edit' do
