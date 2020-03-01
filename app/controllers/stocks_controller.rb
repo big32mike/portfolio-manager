@@ -49,11 +49,12 @@ class StocksController < ApplicationController
     get '/stocks/:id/edit' do
         if logged_in?
             @stock = Stock.find(params[:id])
+            @portfolio = stock_portfolio(@stock)
 
-            if authorized?(stock_portfolio(@stock))
+            if authorized?(@portfolio)
                 erb :'stocks/edit'
             else
-                flash[:eror] = "You aren't authorized to edit that stock"
+                flash[:error] = "You aren't authorized to edit that stock"
                 redirect to "/users/#{current_user.id}"
             end
 

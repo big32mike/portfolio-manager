@@ -22,7 +22,8 @@
 
 <br>
 <h4 style="color:red;">Or Delete <%= @stock.symbol %></h4>
-<form class="" action="/stocks/<%= @stock.id %>/delete" method="post">
+<form class="" action="/portfolios/<%= @portfolio.id %>/stocks/<%= @stock.id %>/delete" method="post">
   <input type="hidden" name="_method" value="delete">
+  <input type="hidden" name="portfolio[id]" value="<%= @portfolio.id %>">
   <input type="submit" value="Delete <%= @stock.symbol %>">
 </form>
