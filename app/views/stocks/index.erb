@@ -1,35 +1,26 @@
 <h2>Stock Index</h2>
 
-<% if @stocks != [] %>
-<table>
+<% if !@all_stocks.empty? %>
+<table border="1">
   <tr>
-    <th>Symbol</th>
-    <th>Name</th>
-    <th>Asset Class</th>
+    <th> Symbol </th>
+    <th> Price </th>
+    <th> Name </th>
+    <th> Qty </th>
+    <th> Asset Class </th>
+    <th> Portfolio </th>
   </tr>
-  <% @stocks.each do |stock| %>
+  <% @all_stocks.sort_by {|s| s.symbol }.each do |stock| %>
   <tr>
-    <td><a href="/stocks/<%= stock.id %>/edit"><%= stock.symbol %></td>
+    <td><%= stock.symbol %></td>
+    <td><%= stock.price %></td>
     <td><%= stock.name %></td>
+    <td><%= stock.quantity %></td>
     <td><%= stock.asset_class %></td>
+    <td><%= stock_portfolio(stock).name %></td>
   </tr>
   <% end %>
-<% else %>
-  <p>Create a New stock below to populate this list</p>
-<% end %>
 </table>
-<br>
-
-<h3>New Stock</h3>
-<form class="" action="/stocks" method="post">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name">
-  <br>
-  <label for="symbol">Symbol:</label>
-  <input type="text" id="symbol" name="symbol">
-  <br>
-  <label for="asset_class">Asset Class:</label>
-  <input type="text" id="asset_class" name="asset_class">
-  <br>
-  <input type="submit" value="Create Stock">
-</form>
+<% else %>
+  <h4>Create New stocks and/or portfolios to populate this list.</h4>
+<% end %>

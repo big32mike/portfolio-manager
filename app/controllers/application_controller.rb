@@ -28,6 +28,10 @@ class ApplicationController < Sinatra::Base
     def authorized?(portfolio)
       current_user.id == portfolio.user_id
     end
+
+    def stock_portfolio(stock)
+      Portfolio.find(stock.portfolio_id)
+    end
   end
 
 end

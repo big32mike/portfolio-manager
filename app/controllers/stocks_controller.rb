@@ -1,5 +1,26 @@
 class StocksController < ApplicationController
-    
+
+    get '/stocks' do
+        if !logged_in?
+            flash[:error] = "You must be logged in to view stocks"
+            redirect to '/login'
+
+        else
+            @all_stocks = []
+            portfolios = current_user.portfolios
+
+            if !portfolios.empty?
+                portfolios.each do |portfolio|
+                    portfolio.stocks.each do |stock|
+                        @all_stocks << stock
+                    end
+                end
+            end
+
+            erb :'stocks/index'
+        end
+    end
+
     post '/stocks' do
         if logged_in?
             portfolio = Portfolio.find(params[:portfolio][:id])
@@ -24,7 +45,7 @@ class StocksController < ApplicationController
         if logged_in?
             @stock = Stock.find(params[:id])
 
-            if authorized?(Portfolio.find(@stock.portfolio_id))
+            if authorized?(stock_portfolio(@stock))
                 erb :'stocks/edit'
             else
                 flash[:eror] = "You aren't authorized to edit that stock"
@@ -40,7 +61,7 @@ class StocksController < ApplicationController
     patch '/stocks/:id' do
         stock = Stock.find(params[:id])
         if logged_in?
-            portfolio = Portfolio.find(stock.portfolio_id)
+            portfolio = stock_portfolio(@stock))
             if authorized?(portfolio)
 
                 if params.values.all? { |value| value != ""}
