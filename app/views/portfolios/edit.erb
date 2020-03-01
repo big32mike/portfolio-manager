@@ -25,7 +25,7 @@
       </tr>
     <% @portfolio.stocks.each do |s| %>
       <tr>
-        <td><%= s.symbol %></td>
+        <td><a href="/stocks/<%= s.id %>/edit"><%= s.symbol %></a></td>
         <td><%= s.price %></td>
         <td><%= s.name %></td>
         <td><%= s.quantity %></td>

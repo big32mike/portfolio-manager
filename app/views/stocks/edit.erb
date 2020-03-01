@@ -5,15 +5,23 @@
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" value="<%= @stock.name %>">
   <br>
+  <label for="price">Price:</label>
+  <input type="text" id="price" name="price" value="<%= @stock.price %>">
+  <br>
   <label for="symbol">Symbol:</label>
   <input type="text" id="symbol" name="symbol" value="<%= @stock.symbol %>">
+  <br>
+  <label for="quantity">Qty:</label>
+  <input type="text" id="quantity" name="quantity" value="<%= @stock.quantity %>">
   <br>
   <label for="asset_class">Asset Class:</label>
   <input type="text" id="asset_class" name="asset_class" value="<%= @stock.asset_class %>">
   <br>
-  <input type="submit" value="Update Stock">
+  <input type="submit" value="Update <%= @stock.symbol %>">
 </form>
+
 <br>
+<h4 style="color:red;">Or Delete <%= @stock.symbol %></h4>
 <form class="" action="/stocks/<%= @stock.id %>/delete" method="post">
   <input type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete <%= @stock.symbol %>">
