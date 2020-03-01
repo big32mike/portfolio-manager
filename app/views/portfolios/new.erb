@@ -13,27 +13,20 @@
 <% end %>
 
 <form action="/portfolios" method="post">
- <!-- <h4>Choose from existing stocks</h4>
-  <% if @stocks != [] %>
-  <br>
-
-    <% @stocks.each do |s| %>
-      <input type="checkbox" name="stock_ids[]" id="<%= s.id %>" value="<%= s.id %>"><%= s.symbol %>
-      <br>
-    <% end %>
-    <br>
-  <% else %>
-    <p>No stocks exist yet, create one below</p>
-    <br>
-  <% end %> -->
   <h4>New stock</h4>
 
   <p>
+    <label for="stock_name">Name:</label>
+    <input type="text" id="stock_name" name="stock[name]">
+    <br>
+    <label for="stock_price">Price:</label>
+    <input type="text" id="stock_price" name="stock[price]">
+    <br>
     <label for="stock_symbol">Symbol:</label>
     <input type="text" id="stock_symbol" name="stock[symbol]">
     <br>
-    <label for="stock_name">Name:</label>
-    <input type="text" id="stock_name" name="stock[name]">
+    <label for="stock_quantity">Qty:</label>
+    <input type="text" id="stock_quantity" name="stock[quantity]">
     <br>
     <label for="stock_asset_class">Asset Class:</label>
     <input type="text" id="stock_asset_class" name="stock[asset_class]">

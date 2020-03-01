@@ -67,22 +67,7 @@ class PortfoliosController < ApplicationController
     patch '/portfolios/:id' do
         portfolio = Portfolio.find(params[:id])
         if authorized?(portfolio)
-            stocks = []
             portfolio.name = params[:portfolio][:name]
-
-            if params[:stock_ids]
-                params[:stock_ids].each do |stock_id|
-                    stocks << Stock.find(stock_id)
-                end
-            else
-                portfolio.stocks.clear
-            end
-
-            if params[:stock][:symbol] != "" && params[:stock][:name] != "" && params[:stock][:asset_class] != ""
-                stocks << Stock.create(params[:stock])
-            end
-            
-            portfolio.stocks << stocks
             portfolio.save
             redirect to "/portfolios/#{portfolio.id}"
         end

@@ -11,40 +11,68 @@
 <br>
 <% end %>
   
-  <h4>Holdings:</h4>
-<form action="/portfolios/<%= @portfolio.id %>" method="post">
-<input type="hidden" name="_method" value="patch">
-  <!-- <% if portfolio.stocks != [] %>
-    <% portfolio.stocks.each do |s| %>
-      <ul>
-        <li>
+<h4>Edit or Delete Holdings:</h4>
+
+  <% if @portfolio.stocks != [] %>
+    <table border="1">
+      <tr>
+        <th>Symbol</th>
+        <th>Price</th>
+        <th>Name</th>
+        <th>Qty</th>
+        <th>Asset Class</th>
+        <th>Delete?</th>
+      </tr>
+    <% @portfolio.stocks.each do |s| %>
+      <tr>
+        <td><%= s.symbol %></td>
+        <td><%= s.price %></td>
+        <td><%= s.name %></td>
+        <td><%= s.quantity %></td>
+        <td><%= s.asset_class %></td>
+        <td>
           <form action="/portfolios/<%= @portfolio.id %>/stocks/<%= s.id %>" method="post">
             <input type="hidden" name="_method" value="delete">
-            
-      <input type="checkbox" name="stock_ids[]" id="<%= s.id %>" value="<%= s.id %>" <%= 'checked' if @portfolio.stocks.all.include?(s) %> ><%= s.symbol %>
-      <br>
+            <input type="submit" value="Delete <%= s.symbol %>">
+          </form>
+        </td>
+      </tr>
     <% end %>
-    <br>...or<br><br>
+    </table>
+
+    <br><br>
   <% else %>
-    <h4>Portfolio empty.</h4>
-  <% end %> -->
+    <p>The <%= @portfolio.name %> portfolio is empty. Add a stock below.</p>
+  <% end %>
     <h4>Create a new stock</h4>
 
-  <p>
-    <label for="stock_symbol">Symbol:</label>
-    <input type="text" id="stock_symbol" name="stock[symbol]">
-    <br>
+  <form action="/stocks" method="post">
     <label for="stock_name">Name:</label>
     <input type="text" id="stock_name" name="stock[name]">
     <br>
+    <label for="stock_price">Price:</label>
+    <input type="text" id="stock_price" name="stock[price]">
+    <br>
+    <label for="stock_symbol">Symbol:</label>
+    <input type="text" id="stock_symbol" name="stock[symbol]">
+    <br>
+    <label for="stock_quantity">Qty:</label>
+    <input type="text" id="stock_quantity" name="stock[quantity]">
+    <br>
     <label for="stock_asset_class">Asset Class:</label>
     <input type="text" id="stock_asset_class" name="stock[asset_class]">
-  </p>
-
-  <p>
-    <label for="name">Portfolio Name:</label>
-    <input type="text" name="portfolio[name]" id="name" value="<%= @portfolio.name %>">
     <br>
-    <input type="submit" value="Update Portfolio">
-  </p>
+    <input type="hidden" name="portfolio[id]" value="<%= @portfolio.id %>">
+    <input type="submit" value="Create Stock">
+  </form>
+  <br>
+
+<h4>Update Portfolio Name</h4>
+<br>
+<form action="/portfolios/<%= @portfolio.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label for="portfolio_name">Portfolio Name:</label>
+  <input type="text" name="portfolio[name]" id="portfolio_name" value="<%= @portfolio.name %>">
+  <br>
+  <input type="submit" value="Update Portfolio">
 </form>
