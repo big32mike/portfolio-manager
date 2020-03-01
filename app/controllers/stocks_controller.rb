@@ -1,21 +1,19 @@
 class StocksController < ApplicationController
     
-    # rework, and maybe move to portfolio controller
     post '/stocks' do
         if logged_in?
             portfolio = Portfolio.find(params[:portfolio][:id])
-            stock = Stock.create(params[:stock])
-            if !Stock.all.include?(stock)
-                flash[:error] = "Invalid input"
-                redirect to "/portfolios/#{portfolio.id}"
-            end
 
             if authorized?(portfolio)
+                stock = Stock.create(params[:stock])
                 portfolio.stocks << stock
-                portfolio.save
                 flash[:message] = "Stock #{stock.symbol} created"
                 redirect to "/portfolios/#{portfolio.id}"
+            else
+                flash[:error] = "You're not authorized to create stock in this portfolio"
+                redirect "/users/#{current_user.id}"
             end
+
         else
             flash[:error] = "You must be logged in to create a stock"
             redirect to '/login'
