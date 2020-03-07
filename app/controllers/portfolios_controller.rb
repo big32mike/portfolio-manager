@@ -70,6 +70,8 @@ class PortfoliosController < ApplicationController
         portfolio = Portfolio.find(params[:id])
         if authorized?(portfolio)
             portfolio.stocks.each do |s|
+                # can handle this in the portfolio model with dependent: :destroy
+                # https://guides.rubyonrails.org/association_basics.html
                 s.delete
             end
             portfolio.delete
